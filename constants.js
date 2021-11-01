@@ -16,7 +16,7 @@ const constants = {
   _POLLFREQUENCY: 30,
   _HAPUSERNAME: '17:51:07:F4:BC:8A',
   _HAPPINCODE: '678-90-876',
-  _HAPPORT: 47129,
+  _HAPPORT: 47128,
   _HAPNAME: 'Grenton Home Automation',
   _OUTLETS: [
     { name: 'DOU7390', id: 'DOU7390' },

@@ -15,24 +15,6 @@ const main = function () {
   gate.setup()
   apple.setup()
 
-  // test device response
-  gate.getDeviceState('DOU7390', function (response, error) {
-    if (error) {
-      log.error(`${myModName}:main device response error: ${error}`)
-    } else {
-      log.debug(`${myModName}:main device response: ${response}`)
-    }
-  })
-
-  // test device switch
-  gate.toggleDeviceState('DOU7390', function (response, error) {
-    if (error) {
-      log.error(`${myModName}:main device response error: ${error}`)
-    } else {
-      log.debug(`${myModName}:main device response: ${response}`)
-    }
-  })
-
   log.info(`${myModName}:setup main ends.`)
 }
 

@@ -43,7 +43,7 @@ function constructCommand (grentonId, operation) {
     default:
       log.info(`${myModName}:constructCommand unsupported device type: ${devType}`)
   }
-  log.info(`${myModName}:constructCommand command: ${command}`)
+  // log.debug(`${myModName}:constructCommand command: ${command}`)
   return (command)
 }
 
@@ -60,7 +60,7 @@ async function talkWithGate (url, callback) {
   // perform device communication using url given
   try {
     const response = await got(url)
-    log.debug(`${myModName}:talkWithGate response: ${response.body}`)
+    // log.debug(`${myModName}:talkWithGate response: ${response.body}`)
     callback(response.body, null)
   } catch (error) {
     log.error(`${myModName}:talkWithGate response error: ${error}`)
@@ -99,7 +99,7 @@ async function switchOffDeviceState (grentonId, callback) {
 }
 
 function setup () {
-
+  log.info(`${myModName}:setup starts`)
 }
 
 exports.setup = setup

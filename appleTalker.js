@@ -21,8 +21,43 @@ const Service = hap.Service
 let bridge
 const accessoryOutlets = []
 
+async function updateOutlets () {
+  // update outlets if data on Grenton is different than in Homekit
+
+  for (const index in accessoryOutlets) {
+    const accessory = accessoryOutlets[index]
+
+    // log.info(`${myModName}:setup get accessory ${devName} `)
+    // find our accessory
+    const ligthBulb = accessory.getService(Service.Lightbulb)
+    // find required characteristic
+    const charOn = ligthBulb.getCharacteristic(Characteristic.On)
+
+    // setup variables
+    const devName = ligthBulb.displayName
+    const hkitState = charOn.value
+    // log.debug(`${myModName}:setup acc: ${devName} get Onservice ${devName} val=${hkitState}`)
+
+    // get current data from Gate
+    gate.getDeviceState(devName, function (res, err) {
+      if (!err) {
+        const respData = JSON.parse(res)
+        const currState = respData.state
+        // log.debug(`${myModName}:updateOutlets current state: ${currState}`)
+        if (hkitState !== currState) {
+          // if state differs - update it
+          log.debug(`${myModName}:updateOutlets new value on Gate, updating ${devName}=${currState} !`)
+          charOn.setValue(currState)
+        }
+      }
+    })
+  }
+}
+
 async function createOutlet (config, done) {
   // create accessory for grenton outlet
+  // using Lightbulb as service type
+
   log.info(`${myModName}:createOutlet ${JSON.stringify(config)}`)
   const uuid = 'grenton.gate.dout.' + config.id
   const name = config.name
@@ -41,7 +76,7 @@ async function createOutlet (config, done) {
     } else {
       const respData = JSON.parse(res)
       let currState = respData.state
-      log.debug(`${myModName}:createOutlet initial state ${currState} from ${JSON.stringify(respData)} from ${res} `)
+      log.debug(`${myModName}:createOutlet initial state ${currState}`)
 
       let currentLightState = currState // on or off
 
@@ -54,7 +89,7 @@ async function createOutlet (config, done) {
           } else {
             const respData = JSON.parse(res)
             currState = respData.state
-            log.info(`${myModName}:getEvent ${name} ${uuid} Queried current light state: ${currentLightState}`)
+            log.info(`${myModName}:getEvent ${name} ${uuid} state=${currentLightState}`)
             callback(undefined, currState)
           }
         })
@@ -93,12 +128,13 @@ async function createOutlet (config, done) {
 
 async function setup () {
 // create accessories and bridge, expose on the network
+  log.info(`${myModName}:setup starts`)
 
   const bridgeUuid = hap.uuid.generate('grenton.gate')
 
   for (const index in appConfig.outlets) {
     const acc = await promisify(createOutlet)(appConfig.outlets[index])
-    log.info(`${myModName}:setup have acc ${index}`)
+    // log.debug(`${myModName}:setup have acc ${index}`)
     accessoryOutlets.push(acc)
   }
 
@@ -130,7 +166,7 @@ async function setup () {
   }, true)
 
   log.info(`${myModName}:setup published bridge (${bridge.bridgedAccessories.length} Accessories) ${appConfig.hapName} ${appConfig._hapUsername} on port ${appConfig.hapPort}`)
-
+  setInterval(updateOutlets, 5000)
   log.info(`${myModName}:setup Accessory setup finished!`)
 }
 
