@@ -4,9 +4,7 @@ const constants = {
 
   // Parametry konfiguracyjne
 
-  _VERSION: '0.1.0',
-  // ADDR_PCA9685: 0x08,
-  _ADDR_PCA9685: 0x70,
+  _VERSION: '0.5.0',
   _CLUIP: '10.10.1.70',
   _GATEHOST: 'http://10.10.1.71',
   _GATEPATH: '/set',
@@ -22,10 +20,7 @@ const constants = {
     { name: 'DOU7390', id: 'DOU7390' },
     { name: 'DOU1181', id: 'DOU1181' },
     { name: 'DOU4403', id: 'DOU4403' }
-  ],
-
-  // stałe
-  LAMP1_R: 7
+  ]
 
 }
 

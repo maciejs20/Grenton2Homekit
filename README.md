@@ -15,7 +15,8 @@ The code is not clean, there are many bugs.
 At this time all configuration of Grenton2Homekit is done via constants.js editing.
 
 You have to set:
-- _GATEHOST to URL of Your Grenton HTTPGate 
+- _HAPPINCODE - set pincode to pair Apple devices
+- _GATEHOST - set to URL of Your Grenton HTTPGate 
 - _OUTLETS - should contain ID and names for Your digital outs (get them from Grenton's ObjectManager -> DOUXXXXX ->ID, remove CLU ID from this field). i.e. if there is a CLU244004970->DOU7221, than You have to put only DOU7221). Name may be set to anything meaningfull. 
 Example:
 ```
@@ -38,6 +39,10 @@ Then create new HttpListener with following settings:
 - ResponseType: JSON
 - OnRequest: link with Your script 
 leave other changes intact
+
+## Bridge discovery at Apple device
+
+Open Home app, click on + and pich "Add accessory" ("Dodaj akcesorium"). We don't provide QR code to scan - so just click on "More options" ("Więcej opcji") and click on "Grenton (Home Automation)". Next provide a pin as set in constants.js (_HAPPINCODE). 
 
 
 ## Warning
