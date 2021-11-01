@@ -1,5 +1,4 @@
 'use strict'
-// this is based on https://github.com/homebridge/HAP-NodeJS/wiki/Using-HAP-NodeJS-as-a-library
 
 // state: działa wysyłanie danych
 //        działa auto update stanu jeśli się zmieni ale kapryśnie. prawidlowo pokazuje na starcie tylko
