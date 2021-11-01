@@ -1,0 +1,24 @@
+1. Config module - appConfig.js
+- get site config {cluIp, gateUrl, cluUsername, cluPassword}
+- get device naming {friendlyName; grentonId}
+- get homekit config {}
+- get parameters {pollFrequency}
+
+2. Gate interaction module - gateTalker.js
+- getDeviceState (gateUrl, grentonId)
+- setDeviceState (gateUrl, grentonId, state)
+- toggleDeviceState (gateUrl, grentonId)
+- checkGateConnectivity (gateUrl)
+
+3. CLU config parser - cluTalker.js
+- getConfigFile (cluIp, cluUsername, cluPassword)
+- readConfigFile (luaFilename)
+- configureDout ()
+
+
+3. Homekit interaction module - appleTalker
+<TBD>
+
+
+
+4. Main loop - server.js
