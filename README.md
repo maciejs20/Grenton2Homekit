@@ -1,10 +1,12 @@
 # Grenton2Homekit
 This is a project to expose Grenton devices via Apple Homekit.
+Grenton is polish SmartHome manufacturer: www.grenton.pl
 
-(c) Maciej Szulc, 2021
+This code is (c) Maciej Szulc, 2021
 
-It requires to have Grenton HTTPGate installed and accessible to this module.
-Also, this requires to setup /set endpoint at the gate using special LUA script.
+Project requires to have HTTPGate (together with all other elements of SmartHome from Grenton) installed and accessible to this module using LAN. There is no possibility to connect via cloud, only direct connection is supported. Do not expose Gate to the internet directly as HttpListener we are creating here is not protected by any means.
+
+Project requires to setup /set endpoint at the gate using special LUA script.
 
 This is initial version of code.
 The code is not clean, there are many bugs.
@@ -14,7 +16,7 @@ At this time all configuration of Grenton2Homekit is done via constants.js editi
 
 You have to set:
 - _GATEHOST to URL of Your Grenton HTTPGate 
-- _OUTLETS - should contain ID and names for Your digital outs (get them from ObjectManager -> specific DOUXXXXX ->ID, remove CLU ID from this field). i.e. if there is a CLU244004970->DOU7221, than You have to put only DOU7221. Name may be set to anything meaningfull. 
+- _OUTLETS - should contain ID and names for Your digital outs (get them from Grenton's ObjectManager -> DOUXXXXX ->ID, remove CLU ID from this field). i.e. if there is a CLU244004970->DOU7221, than You have to put only DOU7221). Name may be set to anything meaningfull. 
 Example:
 ```
   _OUTLETS: [
@@ -26,6 +28,17 @@ Example:
 ## Current state
 Currently it allows to manipulate only DOUT type of devices.
 Works in two way mode. Homekit updates are sent directly to gate. Backward updates (from gate to homekit) are synchronized using polling with timeout of 5 seconds.
+
+## Grenton GateHTTP setup
+
+First create new script on Grenton's HTTP Gate using lua code from this repository.
+
+Then create new HttpListener with following settings:
+- Path: /set
+- ResponseType: JSON
+- OnRequest: link with Your script 
+leave other changes intact
+
 
 ## Warning
 This is work in progress. I don't guarantee anything. No support is provided.
